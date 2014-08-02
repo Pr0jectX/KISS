@@ -3,7 +3,9 @@
 		<title>{{slide.title}}</title>
 	</head>
 	<body>
+		{% autoescape off %}
 		{{slide.html}}
+		{% endautoescape %}
 	</body>
 
 </html>
