@@ -2,4 +2,7 @@ from django.contrib import admin
 
 from slides.models import Slide
 
-admin.site.register (Slide)
+class SlideAdmin (admin.ModelAdmin):
+	change_form_template = 'admin_change_form.html'
+
+admin.site.register (Slide, SlideAdmin)
