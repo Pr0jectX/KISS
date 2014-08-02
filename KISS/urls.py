@@ -10,5 +10,8 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^$', 'slides.views.defaultscreen', name='defaultscreen'),
+    url(r'^$', 'slides.views.index', name='index'),
+    url(r'^select/$', 'slides.views.screens', name='screens'),
+    url(r'^screen/(?P<screen>\d+)$', 'slides.views.screen', name='screen'),
 )
+

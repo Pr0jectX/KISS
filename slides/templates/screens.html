@@ -1,0 +1,27 @@
+{% extends "base/base.html" %}
+
+{% block "body" %}
+
+<h1>KISS<h1>
+<h2>Available screens</h2>
+
+
+{% if screens %}
+
+<table border=1>
+
+{% for screen in screens %}
+
+<tr>
+	<td><a href="{% url 'screen' screen=screen.pk %}">{{screen.name}}</a></td><td>{{screen.description}}</td>
+</tr>
+
+{% endfor %}
+</table>
+
+
+{% else %}
+<p>Error: No screens defined</p>
+{% endif %}
+
+{% endblock %}
