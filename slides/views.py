@@ -1,3 +1,10 @@
 from django.shortcuts import render
 
-# Create your views here.
+from KISS.common import rtr
+
+def defaultscreen (request):
+
+
+	c = {}
+
+	return rtr ("slide.html", c, request)
