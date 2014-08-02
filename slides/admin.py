@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from content.models import Slide
+from slides.models import Slide
 
 admin.site.register (Slide)
