@@ -10,3 +10,13 @@ class Slide (models.Model):
 	def __unicode__(self):
 		return "#" + unicode(self.pk) + " " + self.title
 
+
+
+class Screen (models.Model):
+	name = models.CharField (max_length=200)
+	description = models.TextField ()
+	slides = models.ManyToManyField (Slide)
+
+	def __unicode__(self):
+		return self.name
+
