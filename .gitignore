@@ -54,6 +54,7 @@ docs/_build/
 
 # sqlite-database
 db.sqlite3
+db.sqlite3-journal
 
 # vim swap
 .*.swp
