@@ -1,6 +1,5 @@
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 
-from KISS.common import rtr
 from slides.models import Screen, Slide
 
 def screens (request):
@@ -8,9 +7,12 @@ def screens (request):
 	c = {}
 	c['screens'] = Screen.objects.all()
 
-	return rtr ("screens.html", c, request)
+	return render (request, "screens.html", c)
 
 def index (request):
+
+	from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 	c = {}
 
 	if request.session.get('selected', False):
@@ -18,9 +20,33 @@ def index (request):
 			screen = get_object_or_404 (Screen, pk=request.session['screen'])
 		except:
 			return redirect ('screens')
-		c['slide'] = Slide.objects.filter(screen=screen)[1]
+		
+#		try:
+		screenslides = screen.slides.all()
+#		except:
+#			return redirect ('screens')
+
+		pages = Paginator(screenslides, 1)
+
+			
+		page = request.session.get('page')
+		try:
+			slide = pages.page(page)[0]
+			nextpage = page + 1
+		except PageNotAnInteger:
+			slide = pages.page(1)[0]
+			nextpage = 2
+		except EmptyPage:
+			slide = pages.page(1)[0]
+			nextpage = 2
+
+		request.session['page'] = nextpage
+		c['page'] = nextpage
+				
+		c['slide'] = slide
+
 		c['screen'] = screen.name
-		return rtr ("slide.html", c, request)
+		return render (request, "slide.html", c)
 		
 	else:
 		return redirect ('screens')
@@ -30,5 +56,9 @@ def index (request):
 def screen (request, screen):
 	screen = get_object_or_404 (Screen, pk=screen)
 	request.session['screen'] = screen.pk
+	try:
+		del request.session['page']
+	except:
+		pass
 	request.session['selected'] = True
 	return redirect ('index')

@@ -4,7 +4,13 @@
 {{slide.title}}
 {% endblock %}
 
+{% block "extrahead" %}
+<meta http-equiv="refresh" content="5">
+{% endblock %}
+
+
 {% block "body" %}
+<h1>nextpage: {{page}}</h1>
 <!-- Screen: {{screen}} -->
 
 {% autoescape off %}
